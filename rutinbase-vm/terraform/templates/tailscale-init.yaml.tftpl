@@ -4,6 +4,14 @@ packages:
   - curl
   - ca-certificates
 
+users:
+  - default
+  - name: ${username}
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
+    ssh_authorized_keys:
+      - ${ssh_public_key}
+
 runcmd:
   # Install Tailscale
   - curl -fsSL https://tailscale.com/install.sh | sh
