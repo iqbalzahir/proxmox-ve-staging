@@ -1,0 +1,11 @@
+#cloud-config
+package_update: true
+packages:
+  - curl
+  - ca-certificates
+
+runcmd:
+  # Install Tailscale
+  - curl -fsSL https://tailscale.com/install.sh | sh
+  # Auto-connect Tailscale with auth key and hostname
+  - tailscale up --authkey=${tailscale_auth_key} --hostname=${hostname}

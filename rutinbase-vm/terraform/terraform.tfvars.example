@@ -1,0 +1,18 @@
+# Proxmox VE Connection
+proxmox_api_url          = "https://<PROXMOX_IP_OR_TAILSCALE_IP>:8006/api2/json"
+proxmox_api_token_id     = "root@pam!terraform-token"
+proxmox_api_token_secret = "your-proxmox-api-token-secret"
+proxmox_tls_insecure     = true
+proxmox_node             = "pve"
+
+# VM Configuration
+vm_name             = "staging-vm-1"
+vm_template         = "ubuntu-cloud-template"
+vm_cores            = 2
+vm_sockets          = 1
+vm_memory           = 4096
+vm_user             = "ubuntu"
+ssh_public_key_path = "~/.ssh/id_ed25519.pub"
+
+# Tailscale
+tailscale_auth_key = "tskey-auth-xxxxxx"

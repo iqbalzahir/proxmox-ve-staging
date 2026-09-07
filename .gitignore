@@ -1,0 +1,33 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+*.tfvars
+*.tfvars.json
+
+# Terraform secrets (uncomment if you want to prevent committing tfvars with secrets)
+# terraform.tfvars
+# *.tfvars
+
+# Ansible
+*.retry
+*.log
+ansible-debug.log
+
+# Secrets & Keys
+*.pem
+*.key
+id_rsa*
+id_ed25519*
