@@ -1,0 +1,6 @@
+---
+- name: Pasang Docker pada Rutinbase VM Staging
+  hosts: staging
+  become: true
+  roles:
+    - role: geerlingguy.docker

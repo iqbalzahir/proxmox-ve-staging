@@ -25,9 +25,9 @@ variable "proxmox_tls_insecure" {
 }
 
 variable "proxmox_node" {
-  description = "Nama nod sasaran di Proxmox VE (contoh: pve)"
+  description = "Nama nod sasaran di Proxmox VE (contoh: rutinbase)"
   type        = string
-  default     = "pve"
+  default     = "rutinbase"
 }
 
 # ==========================================
@@ -37,7 +37,7 @@ variable "proxmox_node" {
 variable "vm_name" {
   description = "Nama VM yang ingin dicipta"
   type        = string
-  default     = "staging-vm-1"
+  default     = "rutinbase-vm-staging"
 }
 
 variable "vm_template" {
@@ -64,6 +64,12 @@ variable "vm_memory" {
   default     = 4096
 }
 
+variable "vm_disk_size" {
+  description = "Saiz storaj disk (GB) untuk VM"
+  type        = number
+  default     = 20
+}
+
 variable "vm_user" {
   description = "Nama default user untuk Cloud-Init"
   type        = string
@@ -77,11 +83,35 @@ variable "ssh_public_key_path" {
 }
 
 # ==========================================
-# Tailscale Configuration
+# Network & Staging Domain Configuration
 # ==========================================
 
-variable "tailscale_auth_key" {
-  description = "Tailscale Auth Key untuk pendaftaran automatik VM ke tailnet"
+variable "vm_bridge" {
+  description = "Bridge rangkaian Proxmox (vmbr1 untuk private bridge NAT)"
   type        = string
-  sensitive   = true
+  default     = "vmbr1"
+}
+
+variable "vm_ip" {
+  description = "IP address statik VM dalam subnet private (CIDR)"
+  type        = string
+  default     = "10.10.10.10/24"
+}
+
+variable "vm_gateway" {
+  description = "Default gateway (IP Proxmox vmbr1)"
+  type        = string
+  default     = "10.10.10.1"
+}
+
+variable "vm_dns" {
+  description = "DNS server (IP dnsmasq di Proxmox)"
+  type        = string
+  default     = "10.10.10.1"
+}
+
+variable "vm_domain" {
+  description = "Domain tempatan untuk VM (cth: rutinbase.staging)"
+  type        = string
+  default     = "rutinbase.staging"
 }

@@ -13,12 +13,22 @@ output "vm_id" {
   value       = proxmox_virtual_environment_vm.staging_vm.id
 }
 
-output "tailscale_hostname" {
-  description = "Hostname VM dalam Tailnet Tailscale"
-  value       = var.vm_name
+output "vm_ip" {
+  description = "IP Address VM dalam Private Subnet"
+  value       = var.vm_ip
+}
+
+output "vm_domain" {
+  description = "Domain tempatan VM"
+  value       = var.vm_domain
 }
 
 output "ssh_command" {
-  description = "Arahan SSH untuk menyambung ke VM melalui Tailscale"
-  value       = "ssh ${var.vm_user}@${var.vm_name}"
+  description = "Arahan SSH menggunakan domain .staging"
+  value       = "ssh ${var.vm_user}@${var.vm_domain}"
+}
+
+output "ssh_command_ip" {
+  description = "Arahan SSH menggunakan IP terus melalui Tailscale Subnet Router"
+  value       = "ssh ${var.vm_user}@${split("/", var.vm_ip)[0]}"
 }

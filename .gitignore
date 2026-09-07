@@ -25,6 +25,8 @@ terraform.rc
 *.retry
 *.log
 ansible-debug.log
+**/roles/*
+!**/roles/.gitkeep
 
 # Secrets & Keys
 *.pem

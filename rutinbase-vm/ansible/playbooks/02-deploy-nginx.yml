@@ -1,0 +1,25 @@
+---
+- name: 02 - Deploy Nginx Web Server Container
+  hosts: staging
+  become: true
+  vars:
+    container_name: "web-server"
+    nginx_image: "nginx:latest"
+    web_port: 80
+
+  tasks:
+    - name: Pastikan pakej python3-docker dipasang
+      apt:
+        name:
+          - python3-docker
+        state: present
+        update_cache: yes
+
+    - name: Jalankan Container Nginx pada Port 80
+      community.docker.docker_container:
+        name: "{{ container_name }}"
+        image: "{{ nginx_image }}"
+        state: started
+        restart_policy: always
+        published_ports:
+          - "{{ web_port }}:80"
