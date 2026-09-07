@@ -1,6 +1,5 @@
-# 1. Hantar skrip Tailscale / Cloud-Init ke storage snippets Proxmox
+# 1. Hantar skrip Tailscale ke storage snippets Proxmox
 resource "proxmox_virtual_environment_file" "tailscale_script" {
-  provider     = proxmoxve
   content_type = "snippets"
   datastore_id = "local"
   node_name    = var.proxmox_node
@@ -14,27 +13,34 @@ resource "proxmox_virtual_environment_file" "tailscale_script" {
   }
 }
 
-# 2. Cipta VM dan jalankan skrip tadi masa boot
-resource "proxmox_vm_qemu" "staging_vm" {
+# 2. Cipta VM dan sambungkan Tailscale Cloud-Init
+resource "proxmox_virtual_environment_vm" "staging_vm" {
   name        = var.vm_name
-  target_node = var.proxmox_node
-  clone       = var.vm_template
+  node_name   = var.proxmox_node
 
-  cores   = var.vm_cores
-  sockets = var.vm_sockets
-  memory  = var.vm_memory
+  clone {
+    vm_id = 9000 # Template ubuntu-cloud-template (ID 9000)
+  }
 
-  scsihw = "virtio-scsi-pci"
-  boot   = "order=scsi0"
+  cpu {
+    cores   = var.vm_cores
+    sockets = var.vm_sockets
+  }
 
-  # Setting Cloud-Init asas
-  os_type   = "cloud-init"
-  ipconfig0 = "ip=dhcp"
-  ciuser    = var.vm_user
-  sshkeys   = file(pathexpand(var.ssh_public_key_path))
+  memory {
+    dedicated = var.vm_memory
+  }
 
-  # Sambungkan skrip Tailscale yang di-upload tadi
-  cicustom = "user=local:snippets/${proxmox_virtual_environment_file.tailscale_script.file_name}"
-
-  depends_on = [proxmox_virtual_environment_file.tailscale_script]
+  initialization {
+    ip_config {
+      ipv4 {
+        address = "dhcp"
+      }
+    }
+    user_account {
+      username = var.vm_user
+      keys     = [trimspace(file(pathexpand(var.ssh_public_key_path)))]
+    }
+    user_data_file_id = proxmox_virtual_environment_file.tailscale_script.id
+  }
 }

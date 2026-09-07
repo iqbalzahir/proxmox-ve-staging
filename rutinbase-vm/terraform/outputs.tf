@@ -1,16 +1,16 @@
 output "vm_name" {
   description = "Nama VM yang dicipta"
-  value       = proxmox_vm_qemu.staging_vm.name
+  value       = proxmox_virtual_environment_vm.staging_vm.name
 }
 
 output "vm_target_node" {
   description = "Proxmox node tempat VM di-host"
-  value       = proxmox_vm_qemu.staging_vm.target_node
+  value       = proxmox_virtual_environment_vm.staging_vm.node_name
 }
 
 output "vm_id" {
   description = "ID VM di Proxmox"
-  value       = proxmox_vm_qemu.staging_vm.id
+  value       = proxmox_virtual_environment_vm.staging_vm.id
 }
 
 output "tailscale_hostname" {
