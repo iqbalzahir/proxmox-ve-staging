@@ -1,0 +1,23 @@
+# Proxmox VE Connection
+proxmox_api_url          = "https://<PROXMOX_IP_OR_TAILSCALE_IP>:8006/api2/json"
+proxmox_api_token_id     = "root@pam!terraform-token"
+proxmox_api_token_secret = "your-proxmox-api-token-secret"
+proxmox_tls_insecure     = true
+proxmox_node             = "rutinbase"
+
+# VM Configuration
+vm_name             = "herons-vm-staging"
+vm_template         = "ubuntu-cloud-template"
+vm_cores            = 2
+vm_sockets          = 1
+vm_memory           = 4096
+vm_disk_size        = 20
+vm_user             = "ubuntu"
+ssh_public_key_path = "~/.ssh/id_ed25519.pub"
+
+# Network & Staging Domain
+vm_bridge  = "vmbr1"
+vm_ip      = "10.10.10.11/24"
+vm_gateway = "10.10.10.1"
+vm_dns     = "10.10.10.1"
+vm_domain  = "herons.staging"

@@ -1,0 +1,6 @@
+---
+- name: 01 - Setup Docker pada Rutinbase VM
+  import_playbook: playbooks/01-docker.yml
+
+- name: 02 - Deploy Nginx Web Server
+  import_playbook: playbooks/02-deploy-nginx.yml

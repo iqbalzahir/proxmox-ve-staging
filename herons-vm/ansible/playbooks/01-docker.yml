@@ -1,0 +1,6 @@
+---
+- name: Pasang Docker pada Herons VM Staging
+  hosts: staging
+  become: true
+  roles:
+    - role: geerlingguy.docker
