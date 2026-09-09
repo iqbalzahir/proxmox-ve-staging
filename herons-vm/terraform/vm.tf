@@ -66,7 +66,7 @@ resource "null_resource" "auto_dnsmasq" {
   provisioner "remote-exec" {
     inline = [
       "echo 'address=/${self.triggers.vm_domain}/${self.triggers.vm_ip}' > /etc/dnsmasq.d/${self.triggers.vm_name}.conf",
-      "systemctl reload dnsmasq"
+      "systemctl restart dnsmasq"
     ]
   }
 
@@ -75,7 +75,7 @@ resource "null_resource" "auto_dnsmasq" {
     when = destroy
     inline = [
       "rm -f /etc/dnsmasq.d/${self.triggers.vm_name}.conf",
-      "systemctl reload dnsmasq"
+      "systemctl restart dnsmasq"
     ]
   }
 
